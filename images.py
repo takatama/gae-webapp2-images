@@ -13,10 +13,6 @@ class Photo(db.Model):
     format = db.IntegerProperty()
     date = db.DateTimeProperty(auto_now_add=True)
 
-def guestbook_key(guestbook_name=None):
-    """Constructs a datastore key for a Guestbook entity with guestbook_name."""
-    return db.Key.from_path('Guestbook', guestbook_name or 'default_guestbook')
-
 class MainPage(webapp2.RequestHandler):
     def get(self):
         self.response.out.write('<html><body>')
@@ -73,7 +69,7 @@ class Images(webapp2.RequestHandler):
                 "width": "%s",
                 "height": "%s",
                 "format": "%s", 
-                "exif": "%s"
+                "exif": %s
             }""" % (image.key(), image.width, image.height, image.format, json.dumps(exif)))
         else:
             self.response.out.write('No image.')
